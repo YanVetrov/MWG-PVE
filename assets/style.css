@@ -125,3 +125,17 @@
   padding-left: 57px;
   padding-top: 35px;
 }
+
+@media screen and (max-width:960px) {
+  .container {
+    transform: scale(0.9);
+  }
+
+  .tanks_container {
+    left: 0px;
+  }
+
+  .money {
+    margin-left: 560px;
+  }
+}
