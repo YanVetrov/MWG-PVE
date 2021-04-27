@@ -1,0 +1,138 @@
+let tanks = [
+    {
+    id:5234,
+    name:'skunk',
+    rarity:'common',
+    attack:'10',
+    speed:'60',
+    armor:'200',
+    strength:'350',
+    capacity:'4',
+    type:'battle',
+    repair:'200',
+    locked:false,
+    unlockedTime:0,
+    image:'skunk.png'
+    },
+    {
+        id:5341,
+        name:'raccoon',
+        rarity:'common',
+        attack:'6',
+        speed:'90',
+        armor:'240',
+        strength:'250',
+        capacity:'4',
+        type:'battle',
+        repair:'250',
+        locked:false,
+        unlockedTime:0,
+        image:'raccoon.png'
+        },
+        {
+            id:8435,
+            name:'hamster',
+            rarity:'common',
+            attack:'0',
+            speed:'20',
+            armor:'240',
+            strength:'650',
+            capacity:'4',
+            type:'miner',
+            repair:'300',
+            locked:false,
+            unlockedTime:0,
+            image:'raccoon.png'
+            },
+            {
+                id:9114,
+                name:'hamster',
+                rarity:'common',
+                attack:'0',
+                speed:'20',
+                armor:'240',
+                strength:'650',
+                capacity:'4',
+                type:'miner',
+                repair:'300',
+                locked:false,
+                unlockedTime:0,
+                image:'raccoon.png'
+                },
+                {
+                    id:1293,
+                    name:'elephantor',
+                    rarity:'common',
+                    attack:'16',
+                    speed:'10',
+                    armor:'290',
+                    strength:'650',
+                    capacity:'4',
+                    type:'battle',
+                    repair:'350',
+                    locked:false,
+                    unlockedTime:0,
+                    image:'elephantor.png'
+                    },
+                    {
+                        id:423,
+                        name:'wolf',
+                        rarity:'common',
+                        attack:'11',
+                        speed:'14',
+                        armor:'290',
+                        strength:'250',
+                        capacity:'6',
+                        type:'battle',
+                        repair:'350',
+                        locked:false,
+                        unlockedTime:0,
+                        image:'wolf.png'
+                        },
+]
+export const state = () => ({
+    balance:2500,
+    lines:[
+        {key:'name',value:'raccoon'},
+        {key:'rarity',value:'common'},
+        {key:'attack',value:'14'},
+        {key:'armor',value:'12'},
+        {key:'speed',value:'15'},
+        {key:'strength',value:'200'},
+        {key:'capacity',value:'6'},
+        {key:'type',value:'battle'},
+      ],
+    tanks,
+    currentTank:tanks[3]
+})
+
+export const mutations = {
+    currentTank:(state,id)=>{
+        let tank = state.tanks.find(el=>el.id===id);
+        if(!tank)tank=state.tanks[3];
+        state.currentTank=tank;
+    },
+    repair:(state,num)=>{
+        if(state.balance>=num)state.balance=state.balance-num
+    },
+    unlock:(state,tank)=>{
+            tank.locked=false;
+            tank.unlockedTime=0;
+    }
+}
+export const getters = {
+    tanks:state=>state.tanks,
+    currentTank:state=>state.currentTank,
+    lines:state=>state.lines,
+    balance:state=>state.balance
+}
+export const actions = {
+    lock({state,commit}){
+        let timeout = 30000;
+        state.currentTank.locked=true;
+        state.currentTank.unlockedTime = Date.now()+timeout;
+        setTimeout(() => {
+            commit('unlock',state.currentTank)
+        }, timeout);
+    }
+}
